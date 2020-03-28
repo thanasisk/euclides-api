@@ -5,6 +5,7 @@ import "github.com/gorilla/mux"
 import "net/http"
 import "time"
 import "log"
+import "strconv"
 
 func main() {
 	r := mux.NewRouter()
@@ -25,8 +26,18 @@ func main() {
 
 func NaiveFibonacciHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+	candidate, err := strconv.Atoi(vars["n"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "FIXME")
+	}
+	res := naiveFibonacci(candidate)
+	if res < 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Please provide only non-negative values")
+	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, naiveFibonacci(vars["n"]))
+	fmt.Fprintf(w, strconv.Itoa(res))
 }
 
 func NaiveAckermannHandler(w http.ResponseWriter, r *http.Request) {
@@ -44,6 +55,15 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OK")
 }
 
-func naiveFibonacci(n string) {
-
+func naiveFibonacci(n int) int {
+	if n < 0 {
+		return -1
+	}
+	if n == 0 {
+		return 0
+	} else if n == 1 {
+		return 1
+	} else {
+		return naiveFibonacci(n-2) + naiveFibonacci(n-1)
+	}
 }
