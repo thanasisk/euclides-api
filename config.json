@@ -1,0 +1,6 @@
+{
+    "debug": "true",
+    "readTout": "15",
+    "writeTout": "15",
+    "idleTout": "15"
+}
