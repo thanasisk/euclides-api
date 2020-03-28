@@ -11,6 +11,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/v1/fibonacci/{n}", NaiveFibonacciHandler)
+	r.HandleFunc("/v2/fibonacci/{n}", SmartFibonacciHandler)
 	r.HandleFunc("/v1/ackermann", NaiveAckermannHandler)
 	r.HandleFunc("/v1/factorial", NaiveFactorialHandler)
 	http.Handle("/", r)
@@ -26,18 +27,31 @@ func main() {
 
 func NaiveFibonacciHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	candidate, err := strconv.Atoi(vars["n"])
+	candidate, err := strconv.ParseUint(vars["n"], 10, 64)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, err.Error())
+	}
+	res := naiveFibonacci(candidate)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, string(res))
+}
+
+// to be revisited
+func SmartFibonacciHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	candidate, err := strconv.ParseUint(vars["n"], 10, 64)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "FIXME")
 	}
-	res := naiveFibonacci(candidate)
+	res := smartFibonacci(candidate)
 	if res < 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "Please provide only non-negative values")
 	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, strconv.Itoa(res))
+	fmt.Fprintf(w, string(res))
 }
 
 func NaiveAckermannHandler(w http.ResponseWriter, r *http.Request) {
@@ -53,17 +67,4 @@ func NaiveFactorialHandler(w http.ResponseWriter, r *http.Request) {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "OK")
-}
-
-func naiveFibonacci(n int) int {
-	if n < 0 {
-		return -1
-	}
-	if n == 0 {
-		return 0
-	} else if n == 1 {
-		return 1
-	} else {
-		return naiveFibonacci(n-2) + naiveFibonacci(n-1)
-	}
 }
