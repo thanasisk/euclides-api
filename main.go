@@ -7,6 +7,8 @@ import "time"
 import "log"
 import "strconv"
 
+// init is located elsewhere ...
+
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
@@ -34,7 +36,7 @@ func NaiveFibonacciHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	res := naiveFibonacci(candidate)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, string(res))
+	fmt.Fprintf(w, strconv.FormatUint(res, 10))
 }
 
 // to be revisited
@@ -46,12 +48,8 @@ func SmartFibonacciHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "FIXME")
 	}
 	res := smartFibonacci(candidate)
-	if res < 0 {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Please provide only non-negative values")
-	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, string(res))
+	fmt.Fprintf(w, strconv.FormatUint(res, 10))
 }
 
 func NaiveAckermannHandler(w http.ResponseWriter, r *http.Request) {
