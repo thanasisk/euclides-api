@@ -1,8 +1,0 @@
-{
-    "debug": true,
-    "readTimeout": "15",
-    "writeTimeout": "15",
-    "idleTimeout": "60",
-    "address": "127.0.0.1",
-    "port": "8080"
-}

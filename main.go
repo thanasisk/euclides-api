@@ -1,23 +1,23 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
 type Config struct {
-	Debug        bool          `json:debug`
-	ReadTimeout  time.Duration `json:readTimeout`
+	Debug        bool
+	ReadTimeout  time.Duration
 	WriteTimeout time.Duration `json:writeTimeout`
 	IdleTimeout  time.Duration `json:idleTimeout`
-	Port         string        `json:port`
-	Address      string        `json:address`
+	Port         string
+	Address      string
 }
 
 var cfg Config
@@ -25,8 +25,48 @@ var cfg Config
 // init is located elsewhere too!
 func init() {
 	// first and foremost load configuration
-	// FIXME - if there is time, make it 12-factor?
-	cfg = loadConfiguration("config.json")
+	if strings.ToUpper(os.Getenv("DEBUG")) == "TRUE" {
+		cfg.Debug = true
+	} else {
+		cfg.Debug = false
+	}
+	if len(os.Getenv("ADDRESS")) > 0 {
+		cfg.Address = os.Getenv("ADDRESS")
+	} else {
+		cfg.Address = "127.0.0.1"
+	}
+	if len(os.Getenv("PORT")) > 0 {
+		cfg.Port = os.Getenv("PORT")
+	} else {
+		cfg.Port = "8080"
+	}
+	if len(os.Getenv("RDTIMEOUT")) > 0 {
+		l, err := strconv.Atoi(os.Getenv("RDTIMEOUT"))
+		if err != nil {
+			cfg.ReadTimeout = 15
+		}
+		cfg.ReadTimeout = time.Duration(l)
+	} else {
+		cfg.ReadTimeout = 15
+	}
+	if len(os.Getenv("WRTIMEOUT")) > 0 {
+		l, err := strconv.Atoi(os.Getenv("WRTIMEOUT"))
+		if err != nil {
+			cfg.WriteTimeout = 15
+		}
+		cfg.WriteTimeout = time.Duration(l)
+	} else {
+		cfg.WriteTimeout = 15
+	}
+	if len(os.Getenv("IDTIMEOUT")) > 0 {
+		l, err := strconv.Atoi(os.Getenv("IDTIMEOUT"))
+		if err != nil {
+			cfg.IdleTimeout = 60
+		}
+		cfg.IdleTimeout = time.Duration(l)
+	} else {
+		cfg.IdleTimeout = 60
+	}
 }
 func main() {
 	// no REST API is complete without a nice ASCII logo ...
@@ -166,17 +206,4 @@ func SmartFactorialHandler(w http.ResponseWriter, r *http.Request) {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "OK")
-}
-
-// an utility method to load JSON configuration
-func loadConfiguration(file string) Config {
-	var config Config
-	configFile, err := os.Open(file)
-	defer configFile.Close()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	jsonParser := json.NewDecoder(configFile)
-	jsonParser.Decode(&config)
-	return config
 }

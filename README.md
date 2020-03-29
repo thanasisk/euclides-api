@@ -1,7 +1,7 @@
 # euclides-api
-
+- 12 factor
+- 
 ## TODO
-- config.json expansion or 12-Factor (env vars)
 - debug/performance mode (WiP)
 - naive Ackermann
 - optimized Ackerman
