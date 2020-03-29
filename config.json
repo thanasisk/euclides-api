@@ -1,5 +1,5 @@
 {
-    "debug": "true",
+    "debug": true,
     "readTimeout": "15",
     "writeTimeout": "15",
     "idleTimeout": "60",
