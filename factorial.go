@@ -1,12 +1,6 @@
 package main
 
-var factorials []uint64
-
-func init() {
-	factorials = make([]uint64, 2)
-	factorials[0] = 1
-	factorials[1] = 1
-}
+import "math"
 
 func naiveFactorial(n uint64) uint64 {
 	if n > 0 {
@@ -16,16 +10,10 @@ func naiveFactorial(n uint64) uint64 {
 	return 1
 }
 
-// FIXME
+// bet you were expecting the same memoization trick
+// nope! Golang's STDlib FTW
+// https://en.wikipedia.org/wiki/Gamma_function
 func smartFactorial(n uint64) uint64 {
-	if n <= 1 {
-		return factorials[n]
-	}
-	if n <= uint64(len(factorials)) {
-		return n * factorials[n-1]
-	} else {
-		res := n * smartFactorial(n-1)
-		factorials = append(factorials, res)
-		return res
-	}
+	// values are capped
+	return uint64(math.Gamma(float64(n + 1)))
 }

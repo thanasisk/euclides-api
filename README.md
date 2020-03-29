@@ -1,9 +1,12 @@
 # euclides-api
 
 ## TODO
-command line options / config.json
+config.json expansion
+debug/performance mode
 naive Ackermann
 optimized Ackerman
-optimized factorial
+Ackerman TEST
+Factorial test
+restructure imports
 ## Bugs
-code duplication in handlers
+code duplication in handlers/tests

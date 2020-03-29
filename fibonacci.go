@@ -22,7 +22,7 @@ func smartFibonacci(n uint64) uint64 {
 	if n <= 1 {
 		return fibArray[n]
 	}
-	if n <= uint64(len(fibArray)) {
+	if n < uint64(len(fibArray)) {
 		return fibArray[n-2] + fibArray[n-1]
 	} else {
 		tempFib := smartFibonacci(n-2) + smartFibonacci(n-1)

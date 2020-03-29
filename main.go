@@ -6,9 +6,27 @@ import "net/http"
 import "time"
 import "log"
 import "strconv"
+import "os"
+import "encoding/json"
 
-// init is located elsewhere ...
+type Config struct {
+	Debug        bool          `json:debug`
+	ReadTimeout  time.Duration `json:readTimeout`
+	WriteTimeout time.Duration `json:writeTimeout`
+	IdleTimeout  time.Duration `json:idleTimeout`
+	Port         string        `json:port`
+	Address      string        `json:address`
+}
+
+var cfg Config
+
+// init is located elsewhere too!
+func init() {
+	// first and foremost load configuration
+	cfg = loadConfiguration("config.json")
+}
 func main() {
+	// no REST API is complete without a nice ASCII logo ...
 	logo := `
   ______           _ _     _
  |  ____|         | (_)   | |
@@ -29,10 +47,10 @@ func main() {
 
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         "127.0.0.1:8080",
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-		IdleTimeout:  60 * time.Second,
+		Addr:         cfg.Address + ":" + cfg.Port,
+		WriteTimeout: cfg.WriteTimeout * time.Second,
+		ReadTimeout:  cfg.ReadTimeout * time.Second,
+		IdleTimeout:  cfg.IdleTimeout * time.Second,
 	}
 	log.Fatal(srv.ListenAndServe())
 }
@@ -93,4 +111,16 @@ func SmartFactorialHandler(w http.ResponseWriter, r *http.Request) {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "OK")
+}
+
+func loadConfiguration(file string) Config {
+	var config Config
+	configFile, err := os.Open(file)
+	defer configFile.Close()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	jsonParser := json.NewDecoder(configFile)
+	jsonParser.Decode(&config)
+	return config
 }
