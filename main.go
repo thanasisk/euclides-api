@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	//"net/http/pprof"
 	"os"
 	"strconv"
 	"strings"
@@ -93,6 +94,17 @@ func main() {
 	r.HandleFunc("/v1/factorial/{n:[0-9]+}", NaiveFactorialHandler)
 	r.HandleFunc("/v2/factorial/{n:[0-9]+}", SmartFactorialHandler)
 	r.HandleFunc("/help", HelpHandler)
+	if cfg.Debug == true {
+		//runtime.ReadMemStats
+		//debug.ReadGCStats
+		//debug.Stack
+		//debug.WriteHeapDump
+		//runtime.NumGoroutine
+
+	}
+	r.HandleFunc("/status/memory", MemoryHandler)
+	r.HandleFunc("/status/goroutines", RoutineHandler)
+
 	http.Handle("/", r)
 
 	srv := &http.Server{
