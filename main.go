@@ -92,6 +92,7 @@ func main() {
 	r.HandleFunc("/v1/ackermann/{n:[0-9]+}/{m:[0-9]+}", NaiveAckermannHandler)
 	r.HandleFunc("/v1/factorial/{n:[0-9]+}", NaiveFactorialHandler)
 	r.HandleFunc("/v2/factorial/{n:[0-9]+}", SmartFactorialHandler)
+	r.HandleFunc("/help", HelpHandler)
 	http.Handle("/", r)
 
 	srv := &http.Server{

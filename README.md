@@ -1,11 +1,13 @@
 # euclides-api
 - 12 factor
-- 
+
 ## TODO
 - debug/performance mode (WiP)
-- naive Ackermann
 - optimized Ackerman
 - Ackerman TEST
-- Factorial test
+- Dockerize
+- help handler
+- proper README.md
+- status endpoint
 ## Bugs
 code duplication in handlers/tests
