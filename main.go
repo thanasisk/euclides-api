@@ -33,7 +33,7 @@ func init() {
 	if len(os.Getenv("ADDRESS")) > 0 {
 		cfg.Address = os.Getenv("ADDRESS")
 	} else {
-		cfg.Address = "127.0.0.1"
+		cfg.Address = "0.0.0.0"
 	}
 	if len(os.Getenv("PORT")) > 0 {
 		cfg.Port = os.Getenv("PORT")
