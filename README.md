@@ -7,11 +7,11 @@ Default port is `8080`.
 - Configuration is 12-factor(-ish) via env variables. Sane defaults are provided
 - `DEBUG` set to `TRUE` for debug mode - any other value or lack thereof means
 that the server will be running in performance mode, with less debugging output
-- `ADDRESS`
-- `PORT`
-- `RDTIMEOUT`
-- `WRTIMEOUT`
-- `IDTIMEOUT`
+- `ADDRESS` which address the server should bind to
+- `PORT` which port should the server listen to
+- `RDTIMEOUT` Read Timeout in seconds
+- `WRTIMEOUT` Write Timeout in seconds
+- `IDTIMEOUT` Idle Timeout in seconds (think Slowloris ...)
 
 ## TODO
 - debug/performance mode (WiP)
