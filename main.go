@@ -208,3 +208,24 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "OK")
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Help - if allowed
+func HelpHandler(w http.ResponseWriter, r *http.Request) {
+	msg := `
+	endpoints: v2 is always more optimized than v1 and should be preferred
+	/v1/fibonacci/{n:[0-9]+}
+	/v2/fibonacci/{n:[0-9]+}
+	/v1/ackermann/{n:[0-9]+}/{m:[0-9]+}
+	/v1/factorial/{n:[0-9]+}
+	/v2/factorial/{n:[0-9]+}
+	/status
+	`
+	if cfg.Debug == true {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, msg)
+	} else {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "404 page not found")
+	}
+}
