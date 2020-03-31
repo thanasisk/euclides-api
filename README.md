@@ -14,10 +14,10 @@ that the server will be running in performance mode, with less debugging output
 - `IDTIMEOUT` - Idle Timeout in seconds (think Slowloris ...)
 
 ## TODO
-- debug/performance mode (WiP)
-- optimized Ackerman
-- Ackerman TEST
-- proper README.md
+- Ackermann TEST
 - status endpoint
+- debug endpoint
 ## Bugs
 code duplication in handlers/tests
+## Not implemented
+- Optimized Ackermann

@@ -5,9 +5,11 @@ import "errors"
 func naiveAckermann(n, m uint64) (uint64, error) {
 	// who likes DoS? using numbers greater than these will result to a server
 	// crash owing to a stack overflow
-	if n > 4 || m > 9999999 {
+	N_DoS_GUARD := uint64(3)
+	M_DoS_GUARD := uint64(9999999)
+	if n > N_DoS_GUARD || m > M_DoS_GUARD {
 		// FIXME add proper message
-		return 0xDEADBEEF, errors.New("too large values for this humble CPU")
+		return 0xDEADBEEF, errors.New("too large input values for this humble CPU")
 	}
 	for n != 0 {
 		if m == 0 {

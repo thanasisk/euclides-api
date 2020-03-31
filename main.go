@@ -95,16 +95,14 @@ func main() {
 	r.HandleFunc("/v2/factorial/{n:[0-9]+}", SmartFactorialHandler)
 	r.HandleFunc("/help", HelpHandler)
 	if cfg.Debug == true {
-		//runtime.ReadMemStats
 		//debug.ReadGCStats
 		//debug.Stack
 		//debug.WriteHeapDump
-		//runtime.NumGoroutine
 
 	}
 	r.HandleFunc("/status/memory", MemoryHandler)
 	r.HandleFunc("/status/goroutines", RoutineHandler)
-
+	r.Use(loggingMiddleware)
 	http.Handle("/", r)
 
 	srv := &http.Server{
@@ -228,7 +226,7 @@ func HelpHandler(w http.ResponseWriter, r *http.Request) {
 	endpoints: v2 is always more optimized than v1 and should be preferred
 	/v1/fibonacci/{n:[0-9]+}
 	/v2/fibonacci/{n:[0-9]+}
-	/v1/ackermann/{n:[0-9]+}/{m:[0-9]+}
+	/v1/ackermann/{n:[0|1|2|3]}/{m:[0-9]+}
 	/v1/factorial/{n:[0-9]+}
 	/v2/factorial/{n:[0-9]+}
 	/status
