@@ -17,7 +17,6 @@ that the server will be running in performance mode, with less debugging output
 - debug/performance mode (WiP)
 - optimized Ackerman
 - Ackerman TEST
-- Dockerize
 - proper README.md
 - status endpoint
 ## Bugs
