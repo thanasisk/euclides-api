@@ -95,10 +95,9 @@ func main() {
 	r.HandleFunc("/help", HelpHandler)
 	if cfg.Debug == true {
 		r.HandleFunc("/status/memory/raw", RawMemoryHandler)
-		//debug.ReadGCStats
-		//debug.Stack
-		//debug.WriteHeapDump
-
+		r.HandleFunc("/debug/stackdump", StackDumpHandler)
+		r.HandleFunc("/debug/heapdump", HeapDumpHandler)
+		r.HandleFunc("/debug/gcstats", GCStatsHandler)
 	}
 	r.HandleFunc("/status/memory", MemoryHandler)
 	r.HandleFunc("/status/goroutines", RoutineHandler)
@@ -230,8 +229,11 @@ func HelpHandler(w http.ResponseWriter, r *http.Request) {
 	/v1/factorial/{n:[0-9]+}
 	/v2/factorial/{n:[0-9]+}
 	/status/memory
-	/statys/memory/raw
+	/status/memory/raw
 	/status/goroutines
+	/debug/stackdump
+	/debug/heapdump
+	/debug/gcstats
 	`
 	if cfg.Debug == true {
 		w.WriteHeader(http.StatusOK)
