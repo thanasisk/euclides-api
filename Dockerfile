@@ -13,4 +13,5 @@ FROM debian:buster-slim
 LABEL MAINTAINER <athanasios@akostopoulos.com>
 COPY --from=builder /go/euclides /
 EXPOSE 8080
+USER 1001
 CMD /euclides
