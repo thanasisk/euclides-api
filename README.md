@@ -20,7 +20,6 @@ that the server will be running in performance mode, with less debugging output
 
 ## TODO
 - Ackermann TEST
-- status endpoint
 - debug endpoint
 ## Bugs
 code duplication in handlers/tests
