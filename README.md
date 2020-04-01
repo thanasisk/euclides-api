@@ -11,7 +11,10 @@ Default port is `8080`.
 
 If you do not want/do not have Docker, `go build -o euclides && DEBUG=true ./euclides`
 should do the trick. Remember to run `file(1)` on the binary to dispell a common Golang misconception :-)
-
+## Read the source! Especially comments!
+See above
+## Some security measures
+We do not run as root
 ## Configuration
 - Configuration is 12-factor(-ish) via env variables. Sane defaults are provided
 - `DEBUG` - set to `TRUE` for debug mode - any other value or lack thereof means
@@ -23,6 +26,7 @@ that the server will be running in performance mode, with less debugging output
 - `IDTIMEOUT` - Idle Timeout in seconds (think Slowloris ...)
 
 ## Bugs
-code duplication in handlers/tests
+some code duplication
+
 ## Not implemented
 - Optimized Ackermann
