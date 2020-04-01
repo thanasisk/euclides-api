@@ -5,7 +5,6 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	//"net/http/pprof"
 	"os"
 	"strconv"
 	"strings"
@@ -95,6 +94,7 @@ func main() {
 	r.HandleFunc("/v2/factorial/{n:[0-9]+}", SmartFactorialHandler)
 	r.HandleFunc("/help", HelpHandler)
 	if cfg.Debug == true {
+		r.HandleFunc("/status/memory/raw", RawMemoryHandler)
 		//debug.ReadGCStats
 		//debug.Stack
 		//debug.WriteHeapDump
@@ -229,7 +229,9 @@ func HelpHandler(w http.ResponseWriter, r *http.Request) {
 	/v1/ackermann/{n:[0|1|2|3]}/{m:[0-9]+}
 	/v1/factorial/{n:[0-9]+}
 	/v2/factorial/{n:[0-9]+}
-	/status
+	/status/memory
+	/statys/memory/raw
+	/status/goroutines
 	`
 	if cfg.Debug == true {
 		w.WriteHeader(http.StatusOK)
