@@ -14,7 +14,11 @@ should do the trick. Remember to run `file(1)` on the binary to dispell a common
 ## Read the source! Especially comments!
 See above
 ## Some security measures
-We do not run as root
+- We do not run as root
+- SSL is expected to be handled by a reverse proxy (think nginx-ingress or similar)
+- Differentiation between performance and debug mode
+## Testing
+`go test -v` will perform unit testing
 ## Configuration
 - Configuration is 12-factor(-ish) via env variables. Sane defaults are provided
 - `DEBUG` - set to `TRUE` for debug mode - any other value or lack thereof means
@@ -30,3 +34,9 @@ some code duplication
 
 ## Not implemented
 - Optimized Ackermann
+
+## 3rd party software
+contains code by the gorilla/mux team
+
+## LICENSE
+GPL of course :D

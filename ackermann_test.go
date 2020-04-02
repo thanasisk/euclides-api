@@ -9,11 +9,13 @@ import (
 	"testing"
 )
 
+// in case you like more abstraction, uncomment and use ...
+/*
 type ackermannTuple struct {
 	m int
 	n int
 }
-
+*/
 type ackermannTest struct {
 	n        int
 	m        int
